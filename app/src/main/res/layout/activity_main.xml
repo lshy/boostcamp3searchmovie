@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.databinding.ObservableArrayList"/>
+        <import type="projectcom.lshy.yg.boostcamp3searchmovie.data.MovieInfo"/>
+
+        <variable
+            name="movieList"
+            type="ObservableArrayList&lt;MovieInfo&gt;"/>
+        <variable
+            name="mainActivity"
+            type="projectcom.lshy.yg.boostcamp3searchmovie.MainActivity" />
+    </data>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/movieSearch_text"
+            android:layout_weight="8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/movieSearch_Btn"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="검색"
+            android:onClick="onSearchBtnClick"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/movie_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            bind:item="@{movieList}">
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+</LinearLayout>
+</layout>
