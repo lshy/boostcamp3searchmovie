@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,25 +74,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
             mbinding.setVariable(projectcom.lshy.yg.boostcamp3searchmovie.BR.movieInfo, movieInfo);
             mbinding.title.setText(Html.fromHtml(movieInfo.getTitle(), Html.FROM_HTML_MODE_LEGACY));
             mbinding.rating.setRating(movieInfo.getUserRating()/2);
-            try {
-                   Observable.defer(new Callable<ObservableSource<Bitmap>>() {
-                       URL url = new URL(movieInfo.getImage());
-                       Function<URL, Bitmap> getBitmap = url -> BitmapFactory.decodeStream(url.openStream());
 
-                       @Override
-                    public ObservableSource<Bitmap> call() throws Exception {
-                        return Observable.just(getBitmap.apply(url));
-                    }
-                })
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(bitmap -> mbinding.thumnail.setImageBitmap(bitmap));
-
-
-
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
+            Glide.with(mbinding.getRoot().getContext()).load(movieInfo.getImage()).into(mbinding.thumnail);
 
             mbinding.itemcontiner.setOnClickListener(new View.OnClickListener() {
                 @Override
