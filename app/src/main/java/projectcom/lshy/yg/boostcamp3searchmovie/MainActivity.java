@@ -1,8 +1,12 @@
 package projectcom.lshy.yg.boostcamp3searchmovie;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.databinding.ObservableArrayList;
 import android.os.AsyncTask;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -70,6 +74,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET);
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "INTERNET 수신 권한 있음.", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "INTERNET 수신 권한 없음.", Toast.LENGTH_LONG).show();
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.INTERNET)) {
+                Toast.makeText(this, "INTERNET 권한 설명 필요함.", Toast.LENGTH_LONG).show();
+            } else {
+                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.INTERNET}, 1);
+            }
+        }
 
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         movieListAdapter = new MovieListAdapter();
